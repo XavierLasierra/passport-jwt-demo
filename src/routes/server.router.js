@@ -13,7 +13,7 @@ router.post(
   ({ user }, res) => {
     res.json({
       user,
-      message: "Register works",
+      message: "Register successful",
     });
   }
 );
@@ -34,6 +34,7 @@ router.post(
       return res.json({
         token,
         refreshToken,
+        message: "Login successful",
       });
     } catch (error) {
       res.status(500);
@@ -54,19 +55,14 @@ router.get(
 );
 
 router.get("/unprotected", (req, res) => {
-  res.send("Unprotected works");
+  res.json({ message: "Unprotected works" });
 });
 
 router.post("/refreshToken", (req, res) => {
   const { refreshToken } = req.body;
 
-  if (!refreshToken) {
-    return res.sendStatus(401);
-  }
-
-  if (!refreshTokens.includes(refreshToken)) {
-    return res.sendStatus(403);
-  }
+  if (!refreshToken) return res.sendStatus(401);
+  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
 
   return jwt.verify(refreshToken, process.env.JWT_SECRET, (err, { user }) => {
     if (err) {
@@ -81,6 +77,7 @@ router.post("/refreshToken", (req, res) => {
 
     return res.json({
       token,
+      message: "Refresh token works",
     });
   });
 });
@@ -89,7 +86,7 @@ router.post("/logout", (req, res) => {
   const { refreshToken } = req.body;
   refreshTokens = refreshTokens.filter((current) => current !== refreshToken);
 
-  res.send("Logout successful");
+  res.send({ message: "Logout successful" });
 });
 
 module.exports = router;
