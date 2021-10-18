@@ -1,6 +1,12 @@
 # Passport JWT demo
 
-This is a JWT demo with register, login, logout, refresh token and protected routes.
+This is a JWT demo with:
+* Register
+* Login
+* Logout
+* Refresh token
+* Protected and unprotected routes
+* Password encryption with Bcrypt
 
 ## To run the application
 
