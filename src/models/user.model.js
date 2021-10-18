@@ -1,4 +1,5 @@
 const { model, Schema } = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const userSchema = new Schema({
   email: String,
@@ -6,7 +7,7 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.isValidPassword = function isValidPassword(password) {
-  return password === this.password;
+  return bcrypt.compareSync(password, this.password);
 };
 
 module.exports = model("User", userSchema);
